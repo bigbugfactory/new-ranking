@@ -1,0 +1,11 @@
+@import "variables";
+
+.main__content {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	background: linear-gradient(to right, $color__primary 0%, $color__primary 50%, $color__primary 50%, $color__open--blue 50%,$color__open--blue 100%);
+	@media (min-height: 320px) and (max-height: 500px) {
+		overflow-y: scroll;
+	}
+}

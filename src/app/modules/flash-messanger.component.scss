@@ -1,0 +1,41 @@
+@import "variables";
+@import "media";
+
+.content {
+  width: 100%;
+}
+.flash-messanger {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    height: 70px;
+    width: 85%;
+    background: $color__dark;
+    z-index: 100;
+    border-radius: 7px;
+    margin: auto;
+    transition: 1s all;
+    @media #{$mobile} {
+      height: 48px;
+    }
+  }
+  .flash__content {
+    padding: 26px 30px;
+    text-align: center;
+    @media #{$mobile} {
+      padding: 15px;
+    }
+  }
+  .flash__mess {
+    font: {
+      family: 'flamacondensed-book';
+      size: 20px;
+    }
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: $color__primary;
+    @media #{$mobile} {
+      font-size: 18px;
+    }
+  }

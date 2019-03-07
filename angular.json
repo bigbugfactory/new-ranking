@@ -10,8 +10,27 @@
       "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "sass"
-        }
+          "style": "sass",
+					"spec": false
+        },
+				"@schematics/angular:class": {
+					"spec": false
+				},
+				"@schematics/angular:directive": {
+					"spec": false
+				},
+				"@schematics/angular:guard": {
+					"spec": false
+				},
+				"@schematics/angular:module": {
+					"spec": false
+				},
+				"@schematics/angular:pipe": {
+					"spec": false
+				},
+				"@schematics/angular:service": {
+					"spec": false
+				}
       },
       "architect": {
         "build": {
@@ -29,6 +48,11 @@
             "styles": [
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/assets/styles"
+              ]
+            },
             "scripts": [],
             "es5BrowserSupport": true
           },
@@ -62,7 +86,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "new-ranking:build"
+            "browserTarget": "new-ranking:build",
+						"proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {

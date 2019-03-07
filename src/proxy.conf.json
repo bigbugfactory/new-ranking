@@ -1,0 +1,10 @@
+[
+	{
+		"context": [
+			"/api"
+		],
+		"target": "https://open-ranking.aplikacjakreatywna.pl/",
+		"changeOrigin": true,
+		"secure": false
+	}
+]
