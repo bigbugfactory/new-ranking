@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { RemindPasswordService } from '../../../core/services/remind-password.service';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-success-info',
@@ -8,10 +7,9 @@ import { RemindPasswordService } from '../../../core/services/remind-password.se
 })
 export class SuccessInfoComponent implements OnInit {
 
-  remind;
+  @Input() message: string;
 
-  constructor(private remindPasswordService:RemindPasswordService) { 
-    this.remind = remindPasswordService;
+  constructor() { 
   }
 
   ngOnInit() {  }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
-import { LoginService } from '../../../core/services/login.service';
+import { AdminService } from '../../../core/services/Admin.service';
+
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   state:string = '';
 
-  constructor(private loginService:LoginService) {
+  constructor(private adminService:AdminService) {
 
     this.email = new FormControl('wiktoria@great.com.pl', [Validators.required, Validators.email]);
     this.password = new FormControl('Wiki1234', [Validators.required]);
@@ -30,9 +31,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() { }
   
   send() {
-    this.loginService.sendData(this.loginForm.value).subscribe(data => {
+    this.adminService.sendDataLogin(this.loginForm.value).subscribe(data => {
       this.token = data;
-      console.log(this.token);
+      console.log(data);
       localStorage.setItem('token', JSON.stringify(this.token));
     });
   }

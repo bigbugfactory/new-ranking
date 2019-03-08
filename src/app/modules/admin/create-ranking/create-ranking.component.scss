@@ -1,0 +1,44 @@
+@import "variables";
+@import "media";
+
+.data-puller {
+	header {
+		@media #{$mobile} {
+			display: none;
+		}
+	}
+}
+.view__login {
+	display: block;
+	text-align: center;
+}
+.view__login--form {
+	width: 320px;
+    left: 0;
+    right: 0;
+	margin: 50px auto 0;
+	@media #{$mobile} {
+		width: 280px;
+	}
+	.view__login--form-email, .view__login--form-password {
+		@media #{$mobile} {
+			width: 250px;
+			margin: 15px auto;
+		}
+	}
+	.view__login--form-button {
+		position: relative;
+		display: block;
+		margin: 30px auto 30px;
+		@media #{$mobile} {
+			padding: 10px;
+    		width: 200px;
+		}
+	}
+	.view__login--form-forget {
+		position: relative;
+		display: block;
+		margin: auto;
+		border: none;
+	}
+}

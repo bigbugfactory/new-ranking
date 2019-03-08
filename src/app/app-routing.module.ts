@@ -4,6 +4,8 @@ import { RankingComponent } from './modules/ranking/ranking.component'
 import { AdminComponent } from './modules/admin/admin.component';
 import { LoginComponent } from './modules/admin/login/login.component';
 import { RemindPasswordComponent } from './modules/admin/remind-password/remind-password.component';
+import { NewPasswordComponent } from './modules/new-password/new-password.component';
+import { CreateRankingComponent } from './modules/admin/create-ranking/create-ranking.component';
 
 const routes: Routes = [
   {
@@ -14,6 +16,10 @@ const routes: Routes = [
   {
     path: 'ranking', 
     component: RankingComponent
+  },
+  {
+    path: 'new-password',
+    component: NewPasswordComponent,
   },
   {
     path: 'admin', 
@@ -31,6 +37,10 @@ const routes: Routes = [
       {
         path: 'remind-password',
         component: RemindPasswordComponent,
+      },
+      {
+        path: 'create',
+        component: CreateRankingComponent,
       }
     ],
   },

@@ -6,13 +6,17 @@ import { AdminComponent } from './admin.component';
 import { LoginComponent } from './login/login.component';
 import { RemindPasswordComponent } from './remind-password/remind-password.component';
 import { SuccessInfoComponent } from './success-info/success-info.component';
+import { NewPasswordComponent } from '../new-password/new-password.component';
+import { CreateRankingComponent } from './create-ranking/create-ranking.component';
 
 @NgModule({
   declarations: [
     AdminComponent,
     LoginComponent,
     RemindPasswordComponent,
-    SuccessInfoComponent
+    SuccessInfoComponent,
+    NewPasswordComponent,
+    CreateRankingComponent
   ],
   imports: [
     CommonModule,

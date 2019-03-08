@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { RemindPasswordService } from '../../../core/services/remind-password.service';
+import { AdminService } from '../../../core/services/Admin.service';
 
 @Component({
   selector: 'app-remind-password',
@@ -13,8 +13,9 @@ export class RemindPasswordComponent implements OnInit {
   email:FormControl;
 
   success:boolean;
+  message:string;
 
-  constructor(private passwordService:RemindPasswordService) {
+  constructor(private adminService:AdminService) {
 
     this.email = new FormControl('', [Validators.required, Validators.email]);
 
@@ -27,9 +28,14 @@ export class RemindPasswordComponent implements OnInit {
   }
 
   getEmail() {
-    this.passwordService.remindPassword(this.remindPassword.value).subscribe(
-      success => this.success = success
-    );
+    this.adminService.remindPassword(this.remindPassword.value).subscribe(success => {
+      this.success = success
+      console.log(this.success);
+    });
+  }
+
+  showInfo() {
+    this.message = "Na podany adres e-mail został wysłany link do zmiany hasła."
   }
 
 }
