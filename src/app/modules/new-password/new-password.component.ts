@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../core/services/Admin.service';
 import { FlashMessangerService } from '../../core/services/flash-messanger.service';
 import { FormGroup, FormControl, Validators, PatternValidator, ValidationErrors, AbstractControl, ValidatorFn } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-password',
@@ -16,9 +17,11 @@ export class NewPasswordComponent implements OnInit {
   passwordRegex:RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zżźćńółęąśŻŹĆĄŚĘŁÓŃA-Z\d]{8,}$/;
   token:string;
   data:Object;
+  url = new URL(location.href);
 
   constructor(private adminService:AdminService,
-              private flashMessanger:FlashMessangerService) {
+              private flashMessanger:FlashMessangerService,
+              private router:Router) {
     this.password_1 = new FormControl('', Validators.compose([
                                             this.match('password_2'),
                                             Validators.required,
@@ -37,14 +40,17 @@ export class NewPasswordComponent implements OnInit {
   }
 
   checkPassword() {
-    this.token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvb3Blbi1yYW5raW5nLmFwbGlrYWNqYWtyZWF0eXduYS5wbCIsImlhdCI6MTU1MjA0OTMyMSwidXNlcl9pZCI6IjFmYTBlZGNhLTFlNDktNGIzZS04NzQ3LTQxMzRmYTI1MWFkMCIsImVtYWlsIjoid2lrdG9yaWFAZ3JlYXQuY29tLnBsIn0.2_KbVkziJGIESiRw1J-TJCIUcE59ph3n80N7XkMfhZI';
+    // this.token = this.url.searchParams.get('token');
+    this.token = 'sl1nfVq6rB4EmuLDX2QCPok3m2UFy9sEz1YVnCCKDWa3m3CQW8bbKYeHhykB';
     this.data = {
       password: this.newPasswordForm.value.password_1,
       token: this.token
     }
 
-    this.adminService.sendNewPassword(this.data).subscribe(data => {
-      console.log(data);
+    this.adminService.sendNewPassword(this.data).subscribe(success => {
+      this.flashMessanger.show(success ? 'test' : 'nie-test');
+
+      // this.router.navigateByUrl('/admin/login');
     });
   }
 

@@ -2,31 +2,68 @@
     <header>
       <h2>Panel administracyjny</h2>
     </header>
-    <form class="view__first--form">
+    <form 
+      [formGroup]="dataPuller" 
+      (ngSubmit)="add(this)"
+      class="view__first--form"
+    >
 
       <p class="form__info">Tytuł kampanii</p>
-      <input type="text" name="name" id="form__name" class="form__name" maxlength="50" placeholder="Tytuł kampanii" autocomplete="off" />
+      <input 
+        type="text" 
+        formControlName="name"
+        name="name" 
+        class="form__name" 
+        maxlength="50"
+        placeholder="Tytuł kampanii" 
+        autocomplete="off" 
+      />
 
       <p class="form__info">Opis kampanii</p>
-      <textarea type="text" name="description" id="form__desc" class="form__desc" maxlength="255" placeholder="Maksymalnie w 255 znakach opisz kampanię" onkeydown="count()"></textarea>
-      <span class="form__counter">0/255</span>
+      <textarea 
+        type="text"
+        formControlName="desc" 
+        name="description" 
+        class="form__desc" 
+        maxlength="255" 
+        placeholder="Maksymalnie w 255 znakach opisz kampanię" 
+      >
+      </textarea>
+      <span class="form__counter">{{ desc.value.length }}/255</span>
 
       <p class="form__info">Typ kampanii</p>
       
       <label for="overall">
-        <input type="radio" name="type" id="overall" class="form__checkbox" checked/>
+        <input 
+          type="radio" 
+          id="overall"
+          formControlName="type"
+          class="form__checkbox"
+          value="Ranking ogólny" 
+          checked/>
         <span class="form__checkbox--type">Ranking ogólny</span>
       </label>
       
       <label for="personal">
-        <input type="radio" name="type" id="personal" class="form__checkbox" />
+        <input 
+          type="radio" 
+          id="personal"
+          formControlName="type"
+          class="form__checkbox"
+          value="Ranking personalny" 
+        />
         <span class="form__checkbox--type">Ranking personalny</span>
       </label>
 
       <p class="form__info">Wybierz plik z danymi</p>
       <span class="form__info--hide">Dozwolone formaty to: .csv, .xls, xlsx, .xml</span>
-      <input type="file" name="file" id="form__file" class="form__file"  />
+      <input 
+        type="file" 
+        formControlName="file"
+        (change)="consola()"
+        name="file" 
+        class="form__file"  />
       
-      <button type="button" class="form__button" onclick="add(this)">Dalej</button>
+      <button type="submit" class="form__button">Dalej</button>
     </form>
   </section>

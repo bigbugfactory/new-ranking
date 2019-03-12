@@ -24,8 +24,8 @@
     <button 
       type="submit" 
       [ngClass]="{'view__login--form-button': true}" 
-      [disabled]="loginForm.invalid && loginForm.touched" 
-      routerLink="../create">
+      [disabled]="loginForm.invalid && loginForm.touched"
+    >
       Zaloguj się
     </button>
 
@@ -37,3 +37,5 @@
     Przypomnij hasło
   </button>
 </section>
+
+<flash-messanger></flash-messanger>

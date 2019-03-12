@@ -1,6 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import { AdminService } from '../../../core/services/Admin.service';
+import { FlashMessangerService } from '../../../core/services/flash-messanger.service';
 
 
 @Component({
@@ -17,10 +20,12 @@ export class LoginComponent implements OnInit {
 
   state:string = '';
 
-  constructor(private adminService:AdminService) {
+  constructor(private adminService:AdminService,
+              private flashMessanger:FlashMessangerService,
+              private router:Router) {
 
     this.email = new FormControl('wiktoria@great.com.pl', [Validators.required, Validators.email]);
-    this.password = new FormControl('Wiki1234', [Validators.required]);
+    this.password = new FormControl('Aa111111', [Validators.required]);
 
     this.loginForm = new FormGroup({
       email: this.email,
@@ -31,11 +36,19 @@ export class LoginComponent implements OnInit {
   ngOnInit() { }
   
   send() {
-    this.adminService.sendDataLogin(this.loginForm.value).subscribe(data => {
-      this.token = data;
-      console.log(data);
-      localStorage.setItem('token', JSON.stringify(this.token));
-    });
+    this.loginForm.disable();
+
+    this.adminService.sendDataLogin(this.loginForm.value)
+      .pipe(
+        finalize(() => this.loginForm.enable()),
+      )
+      .subscribe(data => {
+        this.token = data;
+        localStorage.setItem('token', JSON.stringify(this.token));
+        this.router.navigateByUrl('/admin/create');
+      }, () => {
+        this.flashMessanger.show('Coś poszło nie tak.');
+      });
   }
 
 }

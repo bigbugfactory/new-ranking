@@ -8,6 +8,7 @@ import { RemindPasswordComponent } from './remind-password/remind-password.compo
 import { SuccessInfoComponent } from './success-info/success-info.component';
 import { NewPasswordComponent } from '../new-password/new-password.component';
 import { CreateRankingComponent } from './create-ranking/create-ranking.component';
+import { FlashMessangerModule } from '../flash-messanger.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { CreateRankingComponent } from './create-ranking/create-ranking.componen
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    FlashMessangerModule
   ],
   exports: [
     AdminComponent
