@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { RankingComponent } from './modules/ranking/ranking.component'
+import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './modules/admin/admin.component';
+import { CreateRankingComponent } from './modules/admin/create-ranking/create-ranking.component';
 import { LoginComponent } from './modules/admin/login/login.component';
 import { RemindPasswordComponent } from './modules/admin/remind-password/remind-password.component';
+import { ViewComponent } from './modules/admin/view/view.component';
 import { NewPasswordComponent } from './modules/new-password/new-password.component';
-import { CreateRankingComponent } from './modules/admin/create-ranking/create-ranking.component';
+import { RankingComponent } from './modules/ranking/ranking.component';
 
 const routes: Routes = [
   {
@@ -39,8 +40,12 @@ const routes: Routes = [
         component: RemindPasswordComponent,
       },
       {
-        path: 'create',
+        path: 'first-create',
         component: CreateRankingComponent,
+      },
+      {
+        path: 'view/:ranking_id',
+        component: ViewComponent
       }
     ],
   },

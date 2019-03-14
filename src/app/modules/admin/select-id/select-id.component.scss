@@ -1,0 +1,42 @@
+@import "variables";
+@import "media";
+
+.point-column {
+	header {
+		@media #{$mobile} {
+			display: none;
+		}
+	}
+	@media #{$mobile} {
+		margin-top: 30px;
+		font-size: 12px;
+	}
+}
+.id-listener__button {
+	right: 50px;
+	bottom: 40px;
+	@media #{$mobile} {
+		right: 30px;
+		bottom: 20px;
+	}
+}
+.id-listener__button-back {
+	border: none;
+	left: 50px;
+	bottom: 40px;
+	@media #{$mobile} {
+		left: 30px;
+		bottom: 20px;
+	}
+}
+.id-listener__label {
+	display: block;
+	width: auto;
+}
+.id-listener__radio {
+	display: inline-block;
+	width: 30px;
+}
+.id-listener__info {
+	margin-bottom: 20px;
+}

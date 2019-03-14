@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AdminService } from '../../../core/services/admin.service';
 
 @Component({
   selector: 'app-success-info',
@@ -9,7 +10,10 @@ export class SuccessInfoComponent implements OnInit {
 
   @Input() message: string;
 
-  constructor() { 
+  constructor(private adminService:AdminService) { 
+
+    this.adminService.navigate = false;
+    
   }
 
   ngOnInit() {  }

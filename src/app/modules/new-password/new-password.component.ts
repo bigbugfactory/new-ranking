@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService } from '../../core/services/Admin.service';
-import { FlashMessangerService } from '../../core/services/flash-messanger.service';
-import { FormGroup, FormControl, Validators, PatternValidator, ValidationErrors, AbstractControl, ValidatorFn } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AdminService } from '../../core/services/admin.service';
+import { FlashMessangerService } from '../../core/services/flash-messanger.service';
 
 @Component({
   selector: 'app-new-password',

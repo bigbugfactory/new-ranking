@@ -9,6 +9,9 @@ import { SuccessInfoComponent } from './success-info/success-info.component';
 import { NewPasswordComponent } from '../new-password/new-password.component';
 import { CreateRankingComponent } from './create-ranking/create-ranking.component';
 import { FlashMessangerModule } from '../flash-messanger.module';
+import { NavigationComponent } from './navigation/navigation.component';
+import { SelectIdComponent } from './select-id/select-id.component';
+import { ViewComponent } from './view/view.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import { FlashMessangerModule } from '../flash-messanger.module';
     RemindPasswordComponent,
     SuccessInfoComponent,
     NewPasswordComponent,
-    CreateRankingComponent
+    CreateRankingComponent,
+    NavigationComponent,
+    SelectIdComponent,
+    ViewComponent
   ],
   imports: [
     CommonModule,

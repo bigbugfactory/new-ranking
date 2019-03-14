@@ -4,7 +4,7 @@
     </header>
     <form 
       [formGroup]="dataPuller" 
-      (ngSubmit)="add(this)"
+      (ngSubmit)="sendForm()"
       class="view__first--form"
     >
 
@@ -39,7 +39,7 @@
           id="overall"
           formControlName="type"
           class="form__checkbox"
-          value="Ranking ogólny" 
+          value="overall" 
           checked/>
         <span class="form__checkbox--type">Ranking ogólny</span>
       </label>
@@ -50,20 +50,34 @@
           id="personal"
           formControlName="type"
           class="form__checkbox"
-          value="Ranking personalny" 
+          value="personal" 
         />
         <span class="form__checkbox--type">Ranking personalny</span>
       </label>
 
       <p class="form__info">Wybierz plik z danymi</p>
-      <span class="form__info--hide">Dozwolone formaty to: .csv, .xls, xlsx, .xml</span>
+      <span 
+        [ngClass]="{
+          'form__info--hide':true, 
+          'form__info--alert': file.invalid && file.dirty
+        }"
+      >
+        Dozwolone formaty to: .csv, .xls, xlsx, .xml</span>
       <input 
         type="file" 
         formControlName="file"
-        (change)="consola()"
         name="file" 
-        class="form__file"  />
+        class="form__file" 
+      />
       
-      <button type="submit" class="form__button">Dalej</button>
+      <button 
+        type="submit" 
+        class="form__button"
+        [disabled]="dataPuller.invalid"
+      >
+        Dalej
+      </button>
     </form>
   </section>
+
+  <flash-messanger></flash-messanger>

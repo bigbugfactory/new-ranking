@@ -1,0 +1,20 @@
+<nav class="navigation">
+  <button type="button" class="navigation__button">Menu</button>
+  <div class="navigation__content">
+    <p class="navigation__info">Wybierz ranking, który chcesz zobaczyć:</p>
+    <ul 
+      *ngIf="arrayWithRankings"
+      class="navigation__list">
+        <li
+          *ngFor="let item of arrayWithRankings" class="navigation__list--item"
+        >
+            <span class="navigation__list--remove-item" data-id="{{ item.id }}" (click)="removingItem($event)">X</span>
+            <a class ="navigation__list--anchor" data-id="{{ item.id }}" (click)="show($event)">{{ item.name }}</a>
+        </li>
+    </ul>
+  </div>
+</nav>
+
+<span class="log-out" (click)="logout()">Wyloguj</span>
+
+<flash-messanger></flash-messanger>

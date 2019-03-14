@@ -1,6 +1,7 @@
-import { Component, OnInit, ChangeDetectorRef  } from '@angular/core';
-import { AdminService } from '../../../core/services/Admin.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { AdminService } from '../../../core/services/admin.service';
+import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { FlashMessangerService } from '../../../core/services/flash-messanger.service';
 
 @Component({
   selector: 'app-create-ranking',
@@ -10,8 +11,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 export class CreateRankingComponent implements OnInit {
 
-  token:any;
   counter = 0;
+
+  allForm:Object;
   dataPuller:FormGroup;
   name:FormControl;
   desc:FormControl;
@@ -19,12 +21,17 @@ export class CreateRankingComponent implements OnInit {
   file:FormControl;
 
   constructor(private adminService:AdminService,
-              private changeDetector:ChangeDetectorRef) { 
+              private flashMessanger:FlashMessangerService) { 
+
+    this.adminService.navigate = true;            
 
     this.name = new FormControl('', [Validators.required]);
     this.desc = new FormControl('', [Validators.required]);
     this.type = new FormControl('', [Validators.required]);
-    this.file = new FormControl(null, [Validators.required]);
+    this.file = new FormControl(null, Validators.compose([
+                                        Validators.required, 
+                                        CreateRankingComponent.checkExtension
+                                      ]));
 
     this.dataPuller = new FormGroup({
       name: this.name,
@@ -34,13 +41,31 @@ export class CreateRankingComponent implements OnInit {
     });
   }
 
-  consola() { 
-    console.log(this.dataPuller);
+  sendForm() {
+    this.allForm = {
+      'name': this.dataPuller.value.name,
+      'desc': this.dataPuller.value.desc,
+      'type': this.dataPuller.value.type,
+      'file': this.dataPuller.value.file
+    }
+
+    this.adminService.sendFirstPieceOfForm(this.allForm).subscribe(success => {
+      this.flashMessanger.show(success ? 'poszło' : 'wróciło');
+    });
+  }
+
+  static checkExtension(control: AbstractControl): {[key: string]: any} {
+    const allowedExtensions = /\.(csv|xls|xlsx|xlm)$/i;
+    if (!allowedExtensions.test(control.value)) {
+      return {
+        checkExtension: true
+      }
+    }
+    return null
   }
 
   ngOnInit() {
-      this.token = localStorage.setItem('token', JSON.stringify(this.token));
-      // console.log(this.token);
+      if (!this.adminService.token) this.flashMessanger.show('Coś poszło nie tak.');
   }
 
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AdminService } from '../../../core/services/Admin.service';
+import { AdminService } from '../../../core/services/admin.service';
 
 @Component({
   selector: 'app-remind-password',
@@ -16,6 +16,8 @@ export class RemindPasswordComponent implements OnInit {
   message:string;
 
   constructor(private adminService:AdminService) {
+    
+    this.adminService.navigate = false;
 
     this.email = new FormControl('', [Validators.required, Validators.email]);
 

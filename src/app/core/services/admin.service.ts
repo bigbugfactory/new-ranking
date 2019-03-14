@@ -1,26 +1,41 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, catchError, tap } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { LoginResponse } from './login-response.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
 
-  loginUrl:string = '/api/admin/login';
-  remindPasswordUrl:string = '/api/admin/reset_password/request';
+  readonly loginUrl:string = '/api/admin/login';
+  readonly remindPasswordUrl:string = '/api/admin/reset_password/request';
+  readonly newPassword:string = '/api/admin/reset_password/process';
+  readonly halfFormUrl:string = '/api/admin/ranking';
 
-  newPassword:string = '/api/admin/reset_password/process';
+  private _token: string;
+  navigate: boolean = false;
+  dataForMenu;
+
+  get token(): string {
+    if (!this._token) {
+      this._token = localStorage.getItem('token');
+    }
+
+     return this._token;
+  }
 
   constructor(private http:HttpClient) { }
 
-  sendDataLogin(user): Observable<object> {
-    return this.http.post<object>(this.loginUrl, user).pipe(
+  sendDataLogin(user): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(this.loginUrl, user).pipe(
       tap(data => {
         if (('token' in data) === false) {
           throw new Error('Invalid response structure');
         }
+        this._token = data.token;
+        localStorage.setItem('token', data.token);
       }),
     );
   }
@@ -41,4 +56,35 @@ export class AdminService {
   getTokenForCreate(): void {
     return;
   }
+
+  sendFirstPieceOfForm(form) {
+    return this.http.post(this.halfFormUrl, form, { observe: 'response' }).pipe(
+      tap(response => console.log(response)),
+      catchError(() => of(false))
+    );
+  }
+
+  getDataForNav() {
+    return this.http.get(this.halfFormUrl).pipe(
+      map(response => response['rankings'])
+    );
+  }
+
+  removeItemFromMenu(id):Observable<any> {
+    return this.http.post(this.halfFormUrl + '/' + id + '/delete', id, { observe: 'response' }).pipe(
+      tap(response => console.log(response)),
+    );
+  }
+
+  showRanking(id) {
+    return this.http.get(this.halfFormUrl + '/' + id).pipe(
+      map(response => {
+        this.dataForMenu = response['id'];
+        console.log(this.dataForMenu);
+      })
+    );
+  }
+
+
+  //Parametryzowane ścieżki 13:27
 }

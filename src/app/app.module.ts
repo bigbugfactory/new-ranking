@@ -1,13 +1,13 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlashMessangerModule } from './modules/flash-messanger.module';
-import { AdminModule } from './modules/admin/admin.module';
-import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { TokenInterceptor } from './core/auth.interceptor';
+import { AdminModule } from './modules/admin/admin.module';
+import { FlashMessangerModule } from './modules/flash-messanger.module';
 import { RankingComponent } from './modules/ranking/ranking.component';
 
 @NgModule({
@@ -24,7 +24,11 @@ import { RankingComponent } from './modules/ranking/ranking.component';
     HttpClientModule,
     HttpModule
   ],
-  providers: [],
+  providers: [
+    [
+      { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    ],
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
