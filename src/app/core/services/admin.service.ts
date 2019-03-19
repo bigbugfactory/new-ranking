@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { LoginResponse } from './login-response.interface';
+import { RankingResponse } from './ranking.interface';
+import { LoaderService } from './loader.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,6 @@ export class AdminService {
 
   private _token: string;
   navigate: boolean = false;
-  dataForMenu;
 
   get token(): string {
     if (!this._token) {
@@ -26,7 +27,8 @@ export class AdminService {
      return this._token;
   }
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,
+              private loader:LoaderService) { }
 
   sendDataLogin(user): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(this.loginUrl, user).pipe(
@@ -71,20 +73,13 @@ export class AdminService {
   }
 
   removeItemFromMenu(id):Observable<any> {
-    return this.http.post(this.halfFormUrl + '/' + id + '/delete', id, { observe: 'response' }).pipe(
+    return this.http.post(`${this.halfFormUrl}/${id}/delete`, id, { observe: 'response' }).pipe(
       tap(response => console.log(response)),
     );
   }
 
-  showRanking(id) {
-    return this.http.get(this.halfFormUrl + '/' + id).pipe(
-      map(response => {
-        this.dataForMenu = response['id'];
-        console.log(this.dataForMenu);
-      })
-    );
+  checkRank(rank:string):Observable<RankingResponse> {    
+    return this.http.get<RankingResponse>(`${this.halfFormUrl}/${rank}`);
   }
 
-
-  //Parametryzowane ścieżki 13:27
 }

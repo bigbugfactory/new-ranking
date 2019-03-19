@@ -13,17 +13,17 @@
       </div>
       <h2 class="page__title"></h2> 
       <h3 class="page__desc"></h3> 
-      <table *ngIf="dataForRanking" class="show__ranking">
+      <table *ngIf="ranking" class="show__ranking">
         <thead class="show__ranking--head">
-          <tr *ngFor="let head of dataForRanking.header" [style.width.%]="100 / dataForRanking.header.length" class="show__ranking--tr">
+          <tr *ngFor="let head of ranking.header" [style.width.%]="100 / ranking.header.length" class="show__ranking--tr">
             <td class="show__ranking--td">{{ head }}</td>
           </tr>
         </thead> 
-        <!-- <tbody class="show__ranking--users"> -->
-          <!-- <tr *ngFor="let value of dataForRanking.rows" [class.active]="value.is_related_with_user">
+        <tbody class="show__ranking--users"> 
+          <tr *ngFor="let value of ranking.rows" [class.active]="value.is_related_with_user">
             <td *ngFor="let subvalue of value.data">{{ subvalue }}</td>
-          </tr> -->
-        <!-- </tbody> -->
+          </tr>
+         </tbody>
       </table>
     </section>
   </div>

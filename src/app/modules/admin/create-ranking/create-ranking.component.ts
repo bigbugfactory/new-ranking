@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../core/services/admin.service';
+import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { FlashMessangerService } from '../../../core/services/flash-messanger.service';
+import { LoaderService } from '../../../core/services/loader.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-ranking',
@@ -21,7 +24,9 @@ export class CreateRankingComponent implements OnInit {
   file:FormControl;
 
   constructor(private adminService:AdminService,
-              private flashMessanger:FlashMessangerService) { 
+              private flashMessanger:FlashMessangerService,
+              private loader:LoaderService,
+              private router:Router) { 
 
     this.adminService.navigate = true;            
 
@@ -49,9 +54,18 @@ export class CreateRankingComponent implements OnInit {
       'file': this.dataPuller.value.file
     }
 
-    this.adminService.sendFirstPieceOfForm(this.allForm).subscribe(success => {
-      this.flashMessanger.show(success ? 'poszło' : 'wróciło');
-    });
+    this.adminService.sendFirstPieceOfForm(this.allForm).pipe(
+      tap(() => this.loader.showNow())
+    )
+      .subscribe(
+        () => {
+          this.loader.hideNow(),
+          this.router.navigate(['/admin/select-id'])
+        }),
+        () => { 
+          this.loader.hideNow(),
+          this.flashMessanger.show('Coś poszło nie tak.')
+      }
   }
 
   static checkExtension(control: AbstractControl): {[key: string]: any} {
@@ -67,7 +81,5 @@ export class CreateRankingComponent implements OnInit {
   ngOnInit() {
       if (!this.adminService.token) this.flashMessanger.show('Coś poszło nie tak.');
   }
-
-
 
 }

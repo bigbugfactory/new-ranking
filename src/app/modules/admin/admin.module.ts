@@ -2,16 +2,20 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { AdminComponent } from './admin.component';
-import { LoginComponent } from './login/login.component';
-import { RemindPasswordComponent } from './remind-password/remind-password.component';
-import { SuccessInfoComponent } from './success-info/success-info.component';
-import { NewPasswordComponent } from '../new-password/new-password.component';
-import { CreateRankingComponent } from './create-ranking/create-ranking.component';
 import { FlashMessangerModule } from '../flash-messanger.module';
+import { NewPasswordComponent } from '../new-password/new-password.component';
+import { AdminComponent } from './admin.component';
+import { CreateRankingComponent } from './create-ranking/create-ranking.component';
+import { LoaderComponent } from './loader/loader.component';
+import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { RemindPasswordComponent } from './remind-password/remind-password.component';
 import { SelectIdComponent } from './select-id/select-id.component';
+import { SuccessInfoComponent } from './success-info/success-info.component';
 import { ViewComponent } from './view/view.component';
+import { RankingListComponent } from './navigation/ranking-list/ranking-list.component';
+import { PopUpComponent } from './pop-up/pop-up.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,11 @@ import { ViewComponent } from './view/view.component';
     CreateRankingComponent,
     NavigationComponent,
     SelectIdComponent,
-    ViewComponent
+    ViewComponent,
+    LogoutComponent,
+    LoaderComponent,
+    RankingListComponent,
+    PopUpComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +41,8 @@ import { ViewComponent } from './view/view.component';
     FlashMessangerModule
   ],
   exports: [
-    AdminComponent
+    AdminComponent,
+    LoaderComponent
   ]
 })
 export class AdminModule { }

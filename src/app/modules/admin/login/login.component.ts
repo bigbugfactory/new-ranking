@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
 import { AdminService } from '../../../core/services/admin.service';
 import { FlashMessangerService } from '../../../core/services/flash-messanger.service';
+import { LoaderService } from '../../../core/services/loader.service';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private adminService:AdminService,
               private flashMessanger:FlashMessangerService,
+              private loader:LoaderService,
               private router:Router) {
 
     this.adminService.navigate = false;
@@ -40,7 +42,11 @@ export class LoginComponent implements OnInit {
 
     this.adminService.sendDataLogin(this.loginForm.value)
       .pipe(
-        finalize(() => this.loginForm.enable()),
+        tap(() => this.loader.showNow()),
+        finalize(() => {
+          this.loginForm.enable(),
+          this.loader.hideNow()
+        }),
       )
       .subscribe(
         () => this.router.navigate(['/admin/first-create']),

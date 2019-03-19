@@ -1,0 +1,12 @@
+<ul class="navigation__list">
+    <li
+      *ngFor="let item of arrayWithRankings" class="navigation__list--item"
+    >
+        <span class="navigation__list--remove-item" data-id="{{ item.id }}" (click)="removingItem($event)">X</span>
+        <a 
+          class ="navigation__list--anchor" 
+          [routerLink]="['view', item.id]"
+          data-id="{{ item.id }}">{{ item.name }}
+        </a>
+    </li>
+</ul>

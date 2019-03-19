@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AdminService } from '../../../core/services/admin.service';
+import { LoaderService } from '../../../core/services/loader.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-remind-password',
@@ -15,7 +17,8 @@ export class RemindPasswordComponent implements OnInit {
   success:boolean;
   message:string;
 
-  constructor(private adminService:AdminService) {
+  constructor(private adminService:AdminService,
+              private loader:LoaderService) {
     
     this.adminService.navigate = false;
 
@@ -30,9 +33,11 @@ export class RemindPasswordComponent implements OnInit {
   }
 
   getEmail() {
-    this.adminService.remindPassword(this.remindPassword.value).subscribe(success => {
-      this.success = success
-      console.log(this.success);
+    this.adminService.remindPassword(this.remindPassword.value).pipe(
+      tap(() => this.loader.showNow())
+    ).subscribe(success => {
+      this.success = success,
+      this.loader.hideNow();
     });
   }
 

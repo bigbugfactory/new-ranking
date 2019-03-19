@@ -1,0 +1,44 @@
+@import "variables";
+@import "media";
+
+.navigation__list {
+    height: 580px;
+}
+.navigation__list--item {
+    position: relative;
+    margin: 0 0 10px 42px;
+    list-style: decimal-leading-zero;
+    transition: all 0.2s;
+    @media #{$mobile} {
+        padding: 8px 0;
+        margin: 0 0 0 40px;
+    }
+    &:hover {
+        letter-spacing: 3px;
+    }
+    &:hover > span {
+        display: block;
+    }
+    .navigation__list--remove-item {
+        display: none;	
+        position: absolute;
+        right: 10px;
+        top: 0;
+        color: red;
+        transition: all 0.2s;
+        cursor: pointer;
+        @media #{$mobile} {
+            bottom: 0;
+            height: 29px;
+            margin: auto;
+            padding: 5px 11px;
+        }
+        &:hover {
+            color: $color__open--blue;
+        }
+    }
+    .navigation__list--anchor {
+        color: $color__open--blue;
+        cursor: pointer;
+    }
+}
