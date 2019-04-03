@@ -1,0 +1,23 @@
+<div
+  class="popup"
+  [@triggerFlash]="isShow ? 'show' : 'hide'"
+>
+  <div class="popup__content">
+    <p class="popup__mess">
+      <ng-content></ng-content>
+    </p>
+  </div>
+  <div class="popup__buttons">
+    <button
+      type="button"
+      class="popup__buttons--button popup__button--ok"
+      (click)="clickYes()">
+      Tak.
+  </button>
+    <button
+      type="button"
+      class="popup__buttons--button popup__button--cancel"
+      (click)="clickNo()"
+      >Nie.</button>
+  </div>
+</div>

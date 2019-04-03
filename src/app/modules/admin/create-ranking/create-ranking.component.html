@@ -2,76 +2,77 @@
     <header>
       <h2>Panel administracyjny</h2>
     </header>
-    <form 
-      [formGroup]="dataPuller" 
+    <form
+      [formGroup]="dataPuller"
       (ngSubmit)="sendForm()"
       class="view__first--form"
     >
 
       <p class="form__info">Tytuł kampanii</p>
-      <input 
-        type="text" 
+      <input
+        type="text"
         formControlName="name"
-        name="name" 
-        class="form__name" 
+        name="name"
+        class="form__name"
         maxlength="50"
-        placeholder="Tytuł kampanii" 
-        autocomplete="off" 
+        placeholder="Tytuł kampanii"
+        autocomplete="off"
       />
 
       <p class="form__info">Opis kampanii</p>
-      <textarea 
+      <textarea
         type="text"
-        formControlName="desc" 
-        name="description" 
-        class="form__desc" 
-        maxlength="255" 
-        placeholder="Maksymalnie w 255 znakach opisz kampanię" 
+        formControlName="desc"
+        name="description"
+        class="form__desc"
+        maxlength="255"
+        placeholder="Maksymalnie w 255 znakach opisz kampanię"
       >
       </textarea>
       <span class="form__counter">{{ desc.value.length }}/255</span>
 
       <p class="form__info">Typ kampanii</p>
-      
+
       <label for="overall">
-        <input 
-          type="radio" 
+        <input
+          type="radio"
           id="overall"
           formControlName="type"
           class="form__checkbox"
-          value="overall" 
+          value="overall"
           checked/>
         <span class="form__checkbox--type">Ranking ogólny</span>
       </label>
-      
+
       <label for="personal">
-        <input 
-          type="radio" 
+        <input
+          type="radio"
           id="personal"
           formControlName="type"
           class="form__checkbox"
-          value="personal" 
+          value="personal"
         />
         <span class="form__checkbox--type">Ranking personalny</span>
       </label>
 
       <p class="form__info">Wybierz plik z danymi</p>
-      <span 
+      <span
         [ngClass]="{
-          'form__info--hide':true, 
+          'form__info--hide':true,
           'form__info--alert': file.invalid && file.dirty
         }"
       >
         Dozwolone formaty to: .csv, .xls, xlsx, .xml</span>
-      <input 
-        type="file" 
+      <input
+        #fileInput
+        type="file"
         formControlName="file"
-        name="file" 
-        class="form__file" 
+        name="file"
+        class="form__file"
       />
-      
-      <button 
-        type="submit" 
+
+      <button
+        type="submit"
         class="form__button"
         [disabled]="dataPuller.invalid"
       >

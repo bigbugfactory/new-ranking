@@ -6,14 +6,14 @@
         <div class="sidebar__title--position-bottom lighting--blue">indywidualny</div>
       </div>
     </aside>
-    <section class="page">
+    <section class="page" *ngIf="ranking">
       <div class="page__title-mob">
         <div class="page__title-mob--position-top lighting--yellow">Ranking</div>
         <div class="page__title-mob--position-bottom lighting--blue">indywidualny</div>
       </div>
-      <h2 class="page__title"></h2> 
-      <h3 class="page__desc"></h3> 
-      <table *ngIf="ranking" class="show__ranking">
+      <h2 class="page__title">{{ ranking.name }}</h2>  
+      <h3 class="page__desc">{{ ranking.description }}</h3>
+      <table class="show__ranking">
         <thead class="show__ranking--head">
           <tr *ngFor="let head of ranking.header" [style.width.%]="100 / ranking.header.length" class="show__ranking--tr">
             <td class="show__ranking--td">{{ head }}</td>

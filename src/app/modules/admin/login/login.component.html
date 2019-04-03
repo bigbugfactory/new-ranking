@@ -2,28 +2,28 @@
   <header>
     <h2>Witaj.<br />Zaloguj się, by przejść dalej.</h2>
   </header>
-  <form 
-    [formGroup]="loginForm" 
+  <form
+    [formGroup]="loginForm"
     (ngSubmit)="send()"
     class="view__login--form">
 
-    <input 
-      type="email" 
-      formControlName="email" 
-      [ngClass]="{'view__login--form-email': true, 'error': email.touched && email.invalid}" 
-      placeholder="e-mail" 
+    <input
+      type="email"
+      formControlName="email"
+      [ngClass]="{'view__login--form-email': true, 'error': email.touched && email.invalid}"
+      placeholder="e-mail"
     />
 
-    <input 
-      type="password"  
-      formControlName="password" 
-      class="view__login--form-password" 
-      placeholder="hasło" 
+    <input
+      type="password"
+      formControlName="password"
+      class="view__login--form-password"
+      placeholder="hasło"
     />
 
-    <button 
-      type="submit" 
-      [ngClass]="{'view__login--form-button': true}" 
+    <button
+      type="submit"
+      [ngClass]="{'view__login--form-button': true}"
       [disabled]="loginForm.invalid && loginForm.touched"
     >
       Zaloguj się
@@ -31,11 +31,11 @@
 
   </form>
 
-  <button 
+  <button
     class="view__login--form-forget"
     routerLink="../remind-password">
     Przypomnij hasło
   </button>
 </section>
 
-<flash-messanger></flash-messanger>
+<flash-messanger [isShow]="show"></flash-messanger>

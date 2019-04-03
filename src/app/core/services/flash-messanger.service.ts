@@ -4,18 +4,17 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class FlashMessangerService {
-  
-  message:string;
+
+  message: string;
 
   constructor() { }
 
-  show(message:string) {
+  show(message: string) {
     this.message = message;
-     console.log(message);
-    
-    setTimeout(() => {
-        this.message = '';
-    }, 4000);
+
+    // setTimeout(() => {
+    //     this.message = '';
+    // }, 4000);
   }
 
 }

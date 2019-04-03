@@ -11,15 +11,15 @@ import { tap } from 'rxjs/operators';
 })
 export class RemindPasswordComponent implements OnInit {
 
-  remindPassword:FormGroup;
-  email:FormControl;
+  remindPassword: FormGroup;
+  email: FormControl;
 
-  success:boolean;
-  message:string;
+  success: boolean;
+  message: string;
 
-  constructor(private adminService:AdminService,
-              private loader:LoaderService) {
-    
+  constructor(private adminService: AdminService,
+              private loader: LoaderService) {
+
     this.adminService.navigate = false;
 
     this.email = new FormControl('', [Validators.required, Validators.email]);

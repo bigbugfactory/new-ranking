@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AdminService } from '../../core/services/admin.service';
 import { FlashMessangerService } from '../../core/services/flash-messanger.service';
 
@@ -11,17 +10,16 @@ import { FlashMessangerService } from '../../core/services/flash-messanger.servi
 })
 export class NewPasswordComponent implements OnInit {
 
-  newPasswordForm:FormGroup;
-  password_1:FormControl;
-  password_2:FormControl;
-  passwordRegex:RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zżźćńółęąśŻŹĆĄŚĘŁÓŃA-Z\d]{8,}$/;
-  token:string;
-  data:Object;
+  newPasswordForm: FormGroup;
+  password_1: FormControl;
+  password_2: FormControl;
+  passwordRegex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zżźćńółęąśŻŹĆĄŚĘŁÓŃA-Z\d]{8,}$/;
+  token: string;
+  data: Object;
   url = new URL(location.href);
 
-  constructor(private adminService:AdminService,
-              private flashMessanger:FlashMessangerService,
-              private router:Router) {
+  constructor(private adminService: AdminService,
+              private flashMessanger: FlashMessangerService) {
     this.password_1 = new FormControl('', Validators.compose([
                                             this.match('password_2'),
                                             Validators.required,

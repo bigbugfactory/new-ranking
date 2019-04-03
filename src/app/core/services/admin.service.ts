@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { LoginResponse } from './login-response.interface';
-import { RankingResponse } from './ranking.interface';
+import { LoginResponse } from '../../shared/model/login-response.interface';
+import { RankingResponse } from '../../shared/model/ranking.interface';
 import { LoaderService } from './loader.service';
 
 @Injectable({
@@ -11,13 +11,16 @@ import { LoaderService } from './loader.service';
 })
 export class AdminService {
 
-  readonly loginUrl:string = '/api/admin/login';
-  readonly remindPasswordUrl:string = '/api/admin/reset_password/request';
-  readonly newPassword:string = '/api/admin/reset_password/process';
+  readonly loginUrl: string = '/api/admin/login';
+  readonly remindPasswordUrl: string = '/api/admin/reset_password/request';
+  readonly newPassword: string = '/api/admin/reset_password/process';
   readonly halfFormUrl:string = '/api/admin/ranking';
+
+  currentRanking;
 
   private _token: string;
   navigate: boolean = false;
+
 
   get token(): string {
     if (!this._token) {
@@ -27,8 +30,8 @@ export class AdminService {
      return this._token;
   }
 
-  constructor(private http:HttpClient,
-              private loader:LoaderService) { }
+  constructor(private http: HttpClient,
+              private loader: LoaderService) { }
 
   sendDataLogin(user): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(this.loginUrl, user).pipe(
@@ -41,7 +44,7 @@ export class AdminService {
       }),
     );
   }
-  
+
   remindPassword(email): Observable<boolean> {
     return this.http.post(this.remindPasswordUrl, email, { observe: 'response' }).pipe(
       map(response => response.status === 201),
@@ -61,9 +64,12 @@ export class AdminService {
 
   sendFirstPieceOfForm(form) {
     return this.http.post(this.halfFormUrl, form, { observe: 'response' }).pipe(
-      tap(response => console.log(response)),
+    tap(response => {
+        this.currentRanking = response;
+    }),
       catchError(() => of(false))
     );
+
   }
 
   getDataForNav() {
@@ -72,14 +78,18 @@ export class AdminService {
     );
   }
 
-  removeItemFromMenu(id):Observable<any> {
+  removeItemFromMenu(id): Observable<any> {
     return this.http.post(`${this.halfFormUrl}/${id}/delete`, id, { observe: 'response' }).pipe(
       tap(response => console.log(response)),
     );
   }
 
-  checkRank(rank:string):Observable<RankingResponse> {    
+  checkRank(rank:string): Observable<RankingResponse> {
     return this.http.get<RankingResponse>(`${this.halfFormUrl}/${rank}`);
+  }
+
+  sendId(header, id) {
+    return this.http.post(`${this.halfFormUrl}/${id}/id_column_name`, header, { observe: 'response'});
   }
 
 }

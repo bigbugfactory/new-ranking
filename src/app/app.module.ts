@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TokenInterceptor } from './core/auth.interceptor';
 import { AdminModule } from './modules/admin/admin.module';
-import { FlashMessangerModule } from './modules/flash-messanger.module';
+import { FlashMessangerModule } from './shared/flashmessanger/flash-messanger.module';
 import { RankingComponent } from './modules/ranking/ranking.component';
 
 @NgModule({

@@ -19,10 +19,12 @@ export class LoginComponent implements OnInit {
   password: FormControl;
   state:string = '';
 
-  constructor(private adminService:AdminService,
-              private flashMessanger:FlashMessangerService,
-              private loader:LoaderService,
-              private router:Router) {
+  show: boolean = false;
+
+  constructor(private adminService: AdminService,
+              private flashMessanger: FlashMessangerService,
+              private loader: LoaderService,
+              private router: Router) {
 
     this.adminService.navigate = false;
 
@@ -36,7 +38,7 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit() { }
-  
+
   send() {
     this.loginForm.disable();
 
@@ -50,7 +52,13 @@ export class LoginComponent implements OnInit {
       )
       .subscribe(
         () => this.router.navigate(['/admin/first-create']),
-        () => this.flashMessanger.show('Coś poszło nie tak.'),
+        () => {
+          this.show = true;
+          this.flashMessanger.show('Coś poszło nie tak.');
+          setTimeout(() => {
+            this.show = false;
+          }, 4000);
+        },
       );
   }
 

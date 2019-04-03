@@ -1,7 +1,6 @@
 
-  <div 
-    *ngIf="message" 
-    [@triggerFlash]="isShow ? 'show' : 'hide'" 
+  <div
+    [@triggerFlash]="isShow ? 'show' : 'hide'"
     class="flash-messanger">
       <div class="flash__content">
         <p class="flash__mess"> {{ message }} </p>

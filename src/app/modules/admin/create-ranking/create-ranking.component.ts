@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { AdminService } from '../../../core/services/admin.service';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { tap } from 'rxjs/operators';
+import { AdminService } from '../../../core/services/admin.service';
 import { FlashMessangerService } from '../../../core/services/flash-messanger.service';
 import { LoaderService } from '../../../core/services/loader.service';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-ranking',
@@ -13,28 +13,31 @@ import { tap } from 'rxjs/operators';
 })
 
 export class CreateRankingComponent implements OnInit {
+  @ViewChild('fileInput') fileInput: ElementRef;
 
-  counter = 0;
+  show: boolean = false;
+  counter: number = 0;
 
-  allForm:Object;
-  dataPuller:FormGroup;
-  name:FormControl;
-  desc:FormControl;
-  type:FormControl;
-  file:FormControl;
+  allForm: Object;
+  dataPuller: FormGroup;
+  name: FormControl;
+  desc: FormControl;
+  type: FormControl;
+  file: FormControl;
 
-  constructor(private adminService:AdminService,
-              private flashMessanger:FlashMessangerService,
-              private loader:LoaderService,
-              private router:Router) { 
+  constructor(private adminService: AdminService,
+              private flashMessanger: FlashMessangerService,
+              private loader: LoaderService,
+              private router: Router,
+              private changeDet: ChangeDetectorRef) {
 
-    this.adminService.navigate = true;            
+    this.adminService.navigate = true;
 
     this.name = new FormControl('', [Validators.required]);
     this.desc = new FormControl('', [Validators.required]);
     this.type = new FormControl('', [Validators.required]);
     this.file = new FormControl(null, Validators.compose([
-                                        Validators.required, 
+                                        Validators.required,
                                         CreateRankingComponent.checkExtension
                                       ]));
 
@@ -47,14 +50,14 @@ export class CreateRankingComponent implements OnInit {
   }
 
   sendForm() {
-    this.allForm = {
-      'name': this.dataPuller.value.name,
-      'desc': this.dataPuller.value.desc,
-      'type': this.dataPuller.value.type,
-      'file': this.dataPuller.value.file
-    }
 
-    this.adminService.sendFirstPieceOfForm(this.allForm).pipe(
+    const fd = new FormData;
+    fd.append('name', this.dataPuller.value.name);
+    fd.append('desc', this.dataPuller.value.desc);
+    fd.append('type', this.dataPuller.value.type);
+    fd.append('file', this.fileInput.nativeElement.files[0]);
+
+    this.adminService.sendFirstPieceOfForm(fd).pipe(
       tap(() => this.loader.showNow())
     )
       .subscribe(
@@ -62,9 +65,13 @@ export class CreateRankingComponent implements OnInit {
           this.loader.hideNow(),
           this.router.navigate(['/admin/select-id'])
         }),
-        () => { 
-          this.loader.hideNow(),
-          this.flashMessanger.show('Coś poszło nie tak.')
+        () => {
+          this.loader.hideNow();
+          this.show = true;
+          this.flashMessanger.show('Coś poszło nie tak.');
+          setTimeout(() => {
+            this.show = false;
+          }, 4000);
       }
   }
 
@@ -75,11 +82,14 @@ export class CreateRankingComponent implements OnInit {
         checkExtension: true
       }
     }
-    return null
+    return null;
   }
 
   ngOnInit() {
-      if (!this.adminService.token) this.flashMessanger.show('Coś poszło nie tak.');
+      if (!this.adminService.token) {
+        this.show = true;
+        this.flashMessanger.show('Coś poszło nie tak.');
+      }
   }
 
 }

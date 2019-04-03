@@ -1,12 +1,22 @@
 <ul class="navigation__list">
-    <li
+  <li
       *ngFor="let item of arrayWithRankings" class="navigation__list--item"
     >
-        <span class="navigation__list--remove-item" data-id="{{ item.id }}" (click)="removingItem($event)">X</span>
-        <a 
-          class ="navigation__list--anchor" 
-          [routerLink]="['view', item.id]"
-          data-id="{{ item.id }}">{{ item.name }}
-        </a>
-    </li>
+    <span class="navigation__list--remove-item" data-id="{{ item.id }}" (click)="showPopup(item)">X</span>
+    <a
+      class ="navigation__list--anchor"
+      [routerLink]="['view', item.id]"
+      data-id="{{ item.id }}">{{ item.name }}
+    </a>
+
+  </li>
 </ul>
+
+<pop-up
+  *ngIf="popup"
+  [isShow]="show"
+  (yes)="removingItem(popup.id)"
+  (no)="show = false"
+>
+  Czy na pewno chcesz usunąć ranking "{{ popup.name }}"?
+</pop-up>

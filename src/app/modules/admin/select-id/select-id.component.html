@@ -1,13 +1,34 @@
-<section class="point-column">
+<section
+  *ngIf="success === undefined"
+  class="point-column">
   <header>
     <h2>Panel administracyjny</h2>
   </header>
-  <form class="id-listener">
+
+  <form class="id-listener" *ngIf="headersCurrentRank">
     <p class="id-listener__info">Wskaż kolumnę wskazującą ID Użytkownika</p>
-    
-    <div class="id-listener__labels"></div>
-    
+
+    <div
+      *ngFor="let header of headersCurrentRank; let i = index"
+       class="id-listener__labels">
+      <label class="id-listener__label" for="option_{{i}}">
+        <input
+          type="radio"
+          name="column"
+          id="option_{{i}}"
+          class="id-listener__radio"
+          value="{{ header }}"
+          (change)="setId($event)"
+        />
+        <span class="id-listener__radio--type">{{ header }}</span>
+      </label>
+    </div>
+
     <button type="button" class="id-listener__button-back" routerLink="../create-ranking">Wstecz</button>
-    <button type="button" class="id-listener__button">Prześlij</button>
+    <button type="button" class="id-listener__button" (click)="sendId()">Prześlij</button>
   </form>
 </section>
+
+<app-loader></app-loader>
+
+<flash-messanger [isShow]="show"></flash-messanger>

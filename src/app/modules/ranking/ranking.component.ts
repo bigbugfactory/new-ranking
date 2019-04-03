@@ -20,8 +20,8 @@ export class RankingComponent implements OnInit {
 
   message;
 
-  constructor(private rankingService:RankingService, 
-             private flashMessanger:FlashMessangerService) { }
+  constructor(private rankingService: RankingService,
+             private flashMessanger: FlashMessangerService) { }
 
   ngOnInit() {
     if (this.id_url == null || this.query_url == null || this.id_url == '' || this.query_url == '') {
@@ -41,6 +41,6 @@ export class RankingComponent implements OnInit {
       console.log(data);
     });
   }
-  
+
 
 }

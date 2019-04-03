@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { FlashMessangerService } from '../core/services/flash-messanger.service';
+import { FlashMessangerService } from '../../core/services/flash-messanger.service';
 
 @Component({
   selector: 'flash-messanger',
@@ -9,36 +9,28 @@ import { FlashMessangerService } from '../core/services/flash-messanger.service'
   animations: [
     trigger('triggerFlash', [
       state('show', style({
-        top: '50px',
+        display: 'block',
+        opacity: 1
       })),
       state('hide', style({
-        top: '-80px'
+        display: 'none',
+        opacity: 0
       })),
-      transition('show => closed', [
-        animate('1s')
-      ]),
-      transition('hide => open', [
-        animate('1s')
+      transition('show <=> hide', [
+        animate('.5s')
       ])
     ])
   ]
 })
 export class FlashMessangerComponent implements OnInit {
 
-  isShow = true;
-
-  toggle() {
-    this.isShow = !this.isShow;
-  }
+  @Input() isShow: boolean;
 
   get message(): string {
     return this.flashMessanger.message;
   }
 
-  constructor(private flashMessanger:FlashMessangerService) {
-    
-  }
-
+  constructor(private flashMessanger: FlashMessangerService) { }
 
   ngOnInit() {
   }

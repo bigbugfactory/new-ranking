@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { FlashMessangerModule } from '../flash-messanger.module';
+import { FlashMessangerModule } from '../../shared/flashmessanger/flash-messanger.module';
 import { NewPasswordComponent } from '../new-password/new-password.component';
 import { AdminComponent } from './admin.component';
 import { CreateRankingComponent } from './create-ranking/create-ranking.component';
@@ -15,7 +15,7 @@ import { SelectIdComponent } from './select-id/select-id.component';
 import { SuccessInfoComponent } from './success-info/success-info.component';
 import { ViewComponent } from './view/view.component';
 import { RankingListComponent } from './navigation/ranking-list/ranking-list.component';
-import { PopUpComponent } from './pop-up/pop-up.component';
+import { PopUpComponent } from '../../shared/pop-up/pop-up.component';
 
 @NgModule({
   declarations: [

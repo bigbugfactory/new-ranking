@@ -2,7 +2,9 @@
   <button type="button" class="navigation__button">Menu</button>
   <div class="navigation__content">
     <p class="navigation__info">Wybierz ranking, który chcesz zobaczyć:</p>
-    <app-ranking-list *ngIf="arrayWithRankings"></app-ranking-list>
+    
+    <app-ranking-list *ngIf="arrayWithRankings" [arrayWithRankings]="arrayWithRankings"></app-ranking-list>
+    
   </div>
 </nav>
 

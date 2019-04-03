@@ -1,17 +1,17 @@
 @import "variables";
 
-:host() {
+.logout__button {
     position: absolute;
     display: block;
-    top: -4px;
+    top: -6px;
     right: 30px;
     margin: auto;
     padding: 10px;
     width: 100px;
     font: {
-    family: 'flamacondensed-book';
-    size: 28px;
-    weight: bold; }
+        family: 'flamacondensed-book';
+        size: 28px;
+        weight: bold; }
     text-transform: uppercase;
     color: $color__primary;
     cursor: default;
@@ -19,7 +19,8 @@
     z-index: 1;
     transition: all 1s;
     cursor: pointer;
+    border: none;
     &:hover {
-    letter-spacing: 3px;
+        letter-spacing: 3px;
     }
 }

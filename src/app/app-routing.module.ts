@@ -8,6 +8,7 @@ import { SelectIdComponent } from './modules/admin/select-id/select-id.component
 import { ViewComponent } from './modules/admin/view/view.component';
 import { NewPasswordComponent } from './modules/new-password/new-password.component';
 import { RankingComponent } from './modules/ranking/ranking.component';
+import { SuccessInfoComponent } from './modules/admin/success-info/success-info.component';
 
 const routes: Routes = [
   {
@@ -16,7 +17,7 @@ const routes: Routes = [
     redirectTo: 'admin'
   },
   {
-    path: 'ranking', 
+    path: 'ranking',
     component: RankingComponent
   },
   {
@@ -24,7 +25,7 @@ const routes: Routes = [
     component: NewPasswordComponent,
   },
   {
-    path: 'admin', 
+    path: 'admin',
     component: AdminComponent,
     children: [
       {
@@ -51,7 +52,14 @@ const routes: Routes = [
       {
         path: 'view/:ranking_id',
         component: ViewComponent
-      }
+      },
+      {
+        path: 'success',
+        component: SuccessInfoComponent,
+        data: {
+          'message': 'Ranking został wysłany i pojawi się w manu.'
+        }
+      },
     ],
   },
   {

@@ -8,7 +8,7 @@ import { AdminService } from '../../core/services/admin.service';
 })
 export class AdminComponent implements OnInit {
 
-  constructor(private adminService:AdminService) { }
+  constructor(private adminService: AdminService) { }
 
   ngOnInit() {
   }

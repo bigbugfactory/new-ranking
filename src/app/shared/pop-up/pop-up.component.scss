@@ -1,0 +1,64 @@
+@import "variables";
+@import "media";
+
+.popup {
+    // position: absolute;
+    position: fixed;
+    top: -350px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100px;
+	width: 700px;
+	background: $color__dark;
+    z-index: 100;
+    border-radius: 7px;
+	margin: auto;
+	transition: 1s all;
+	@media #{$mobile} {
+		height: 48px;
+    }
+}
+.popup__content {
+    padding: 26px 30px;
+    text-align: center;
+    @media #{$mobile} {
+        padding: 15px;
+    }
+    .popup__mess {
+        font: {
+            family: 'flamacondensed-book';
+            size: 20px;
+        }
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: $color__primary;
+        @media #{$mobile} {
+            font-size: 18px;
+        }
+    }
+}
+.popup__buttons {
+	position: absolute;
+	bottom: 10px;
+	left: 0;
+	right: 0;
+	width: 200px;
+    margin: auto;
+    text-align: center;
+}
+.popup__buttons--button {
+    position: relative;
+    display: inline-block;
+    border: none;
+    transition: all 0.2s;
+    width: 60px;
+    font: {
+        family: 'flamacondensed-book';
+        size: 20px;
+    }
+    &:hover {
+        color: $color__primary;
+        letter-spacing: 2px;
+    }
+}

@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { FlashMessangerService } from 'src/app/core/services/flash-messanger.service';
+import { Component, OnInit, Input } from '@angular/core';
 import { AdminService } from '../../../../core/services/admin.service';
 
 @Component({
@@ -9,28 +8,29 @@ import { AdminService } from '../../../../core/services/admin.service';
 })
 export class RankingListComponent implements OnInit {
 
-  arrayWithRankings;
+  @Input() arrayWithRankings;
+  show: boolean = false;
+  popup: string[];
 
-  constructor(private adminService: AdminService,
-              private flashMessanger:FlashMessangerService) { }
+  constructor(private adminService: AdminService) { }
 
-  removingItem(event) {
-    const id = event.srcElement.id ;
-    this.adminService.removeItemFromMenu(id).subscribe(
-      () => this.arrayWithRankings = this.arrayWithRankings.filter(
-        (el) => el.id != id
+  showPopup(item) {
+    this.show = true;
+    this.popup = item;
+  }
+
+  removingItem(id) {
+    this.show = false;
+      this.adminService.removeItemFromMenu(id).subscribe(
+        () => {
+          this.arrayWithRankings = this.arrayWithRankings.filter(
+            (el) => el.id != id
+          )
+          console.log(this.arrayWithRankings);
+        }
       )
-    );
-  }
+    }
 
-  ngOnInit() {
-    this.adminService.getDataForNav()
-    .subscribe(
-      (resp) => {
-        this.arrayWithRankings = resp;
-      },
-      () => this.flashMessanger.show('Coś poszło nie tak.'),
-      );
-  }
+  ngOnInit() { }
 
 }
