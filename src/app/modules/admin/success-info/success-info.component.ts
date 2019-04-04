@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class SuccessInfoComponent implements AfterViewInit {
 
-  message: string;
+  @Input() message: string;
 
   constructor(private adminService: AdminService,
               private router: ActivatedRoute) {
@@ -19,9 +19,9 @@ export class SuccessInfoComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.message = this.router.snapshot.data.message;
-    });
+    // setTimeout(() => {
+    //   this.message = this.router.snapshot.data.message;
+    // });
    }
 
 }

@@ -9,12 +9,49 @@ import { ViewComponent } from './modules/admin/view/view.component';
 import { NewPasswordComponent } from './modules/new-password/new-password.component';
 import { RankingComponent } from './modules/ranking/ranking.component';
 import { SuccessInfoComponent } from './modules/admin/success-info/success-info.component';
+import { AuthGuard } from './core/services/auth/auth.guard';
 
+
+const OUTER_ROUTES = [
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: '/login'
+  },
+
+  {
+    path: 'remind-password',
+    component: RemindPasswordComponent,
+  },
+  {
+    path: 'first-create',
+    component: CreateRankingComponent,
+  },
+  {
+    path: 'select-id',
+    component: SelectIdComponent,
+  },
+  {
+    path: 'view/:ranking_id',
+    component: ViewComponent
+  },
+  {
+    path: 'success',
+    component: SuccessInfoComponent,
+    data: {
+      'message': 'Ranking został wysłany i pojawi się w manu.'
+    }
+  }
+]
 const routes: Routes = [
   {
     path: '',
 		pathMatch: 'full',
     redirectTo: 'admin'
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
   {
     path: 'ranking',
@@ -27,40 +64,8 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
-    children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'login'
-      },
-      {
-        path: 'login',
-        component: LoginComponent,
-      },
-      {
-        path: 'remind-password',
-        component: RemindPasswordComponent,
-      },
-      {
-        path: 'first-create',
-        component: CreateRankingComponent,
-      },
-      {
-        path: 'select-id',
-        component: SelectIdComponent,
-      },
-      {
-        path: 'view/:ranking_id',
-        component: ViewComponent
-      },
-      {
-        path: 'success',
-        component: SuccessInfoComponent,
-        data: {
-          'message': 'Ranking został wysłany i pojawi się w manu.'
-        }
-      },
-    ],
+    canActivateChild: [AuthGuard],
+    children: OUTER_ROUTES,
   },
   {
     path: '**',

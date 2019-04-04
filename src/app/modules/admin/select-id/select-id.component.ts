@@ -45,8 +45,12 @@ export class SelectIdComponent implements OnInit {
     ).subscribe(success => {
       this.success = success;
       this.loader.hideNow();
-      // this.message = "Ranking został przesłany. Pojawi się w menu.a"
-      this.router.navigate(['/admin/success']);
+      this.show = true;
+      this.flashMessanger.show('Ranking został poprawnie przesłany. Pojawi się w menu.');
+      setTimeout(() => {
+        this.show = false;
+        this.router.navigate(['/admin/first-create']);
+      }, 4000);
     },
     () => {
       this.show = true;

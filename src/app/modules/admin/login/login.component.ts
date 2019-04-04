@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, tap } from 'rxjs/operators';
 import { AdminService } from '../../../core/services/admin.service';
 import { FlashMessangerService } from '../../../core/services/flash-messanger.service';
 import { LoaderService } from '../../../core/services/loader.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { LoaderService } from '../../../core/services/loader.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements AfterViewInit {
 
   loginForm:FormGroup;
   email: FormControl;
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit {
   constructor(private adminService: AdminService,
               private flashMessanger: FlashMessangerService,
               private loader: LoaderService,
-              private router: Router) {
+              private router: Router,
+              private authService: AuthService) {
 
     this.adminService.navigate = false;
 
@@ -37,7 +39,11 @@ export class LoginComponent implements OnInit {
     });
    }
 
-  ngOnInit() { }
+  ngAfterViewInit () {
+    if (localStorage.getItem('token')) {
+      this.router.navigate(['/admin/first-create']);
+    }
+  }
 
   send() {
     this.loginForm.disable();
@@ -61,5 +67,16 @@ export class LoginComponent implements OnInit {
         },
       );
   }
+
+  login() {
+    this.authService.login().subscribe(() => {
+      if (this.authService.isLoggedIn) this.router.navigate(['admin/login']);
+    });
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
 
 }
